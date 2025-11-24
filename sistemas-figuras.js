@@ -163,6 +163,60 @@ class ColeccionFiguras {
   }
 }
 
+// Ejercicio: Extiende el sistema creando nuevas figuras 
+// ok (pentágono, hexágono) y añade funcionalidades como: 
+// ok comparación de similitud entre figuras, 
+// cálculo de volumen para figuras 3D, 
+// validación de parámetros en constructores, y 
+// un método para dibujar figuras usando caracteres ASCII. 
+// Implementa al menos dos patrones de diseño adicionales.
+
+// Clase Pentágono
+class Pentagono extends FiguraGeometrica {
+  constructor(lado, apotema) {
+    super('Pentagono');
+ // Para un pentágono, necesitamos la longitud del lado (L)
+    this.lado = lado;
+    // Y la apotema (a) para el área
+    this.apotema = apotema;
+  }
+
+ calcularArea() {
+    // A = (Perímetro * Apotema) / 2
+    const perimetro = this.calcularPerimetro();
+    return (perimetro * this.apotema) / 2;
+  }
+
+  calcularPerimetro() {
+    // P = 5 * Lado
+    return 5 * this.lado;
+  }
+
+}
+
+
+// Clase Hexagono
+class Hexagono extends FiguraGeometrica {
+  constructor(lado, apotema) {
+    super('Hectagono');
+    this.lado = lado;
+    this.apotema = apotema;
+  }
+
+ calcularPerimetro() {
+    // P = 6 * Lado
+    return 6 * this.lado;
+  }
+
+  calcularArea() {
+    // A = (Perímetro * Apotema) / 2
+    const perimetro = this.calcularPerimetro();
+    return (perimetro * this.apotema) / 2;
+  }
+}
+
+
+
 // Demostración completa del sistema
 console.log('🚀 SISTEMA DE FIGURAS GEOMÉTRICAS CON POO\n');
 
@@ -216,3 +270,17 @@ console.log(`ID del círculo: ${circulo.id}`);
 // console.log(circulo.#id); // ❌ Error: Propiedad privada
 
 console.log('\n✅ Sistema POO completo implementado exitosamente!');
+
+
+
+
+
+// Lado = 5, Apotema = 4
+const pentagono = new Pentagono(5, 4);
+const hexagono = new Hexagono(5, 4);
+
+console.log(`Perímetro del ${pentagono.nombre}:`, pentagono.calcularPerimetro());
+// Resultado: 25
+
+console.log(`Perímetro del ${hexagono.nombre}:`, hexagono.calcularPerimetro());
+// Resultado: 30
