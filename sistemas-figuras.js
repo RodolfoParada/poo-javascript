@@ -272,7 +272,91 @@ class Cubo extends FiguraGeometrica {
         );
     }
 
+// patrón factory 
+    class FiguraFactory {
+    /**
+     * @param {string} tipo - El tipo de figura a crear (ej: 'pentagono', 'cubo')
+     * @param {Object} props - Las propiedades necesarias (lado, apotema, etc.)
+     */
+    static crearFigura(tipo, props) {
+        tipo = tipo.toLowerCase();
+        
+        switch (tipo) {
+            case 'pentagono':
+                // Verifica que existan las propiedades necesarias para el constructor
+                if (!props.lado || !props.apotema) {
+                    throw new Error("Se requiere lado y apotema para el pentágono.");
+                }
+                return new PentagonoRegular(props.lado, props.apotema);
+            
+            case 'cubo':
+                if (!props.lado) {
+                    throw new Error("Se requiere lado para el cubo.");
+                }
+                return new Cubo(props.lado);
+                
+            // Puedes añadir más casos aquí (hexágono, esfera, etc.)
+            default:
+                throw new Error(`Tipo de figura no soportado: ${tipo}`);
+        }
+    }
+}
 
+// patrón strategy
+
+class CalculadoraFigura {
+    /**
+     * @param {Figura} figuraStrategy - La instancia de la figura (Pentagono, Cubo)
+     */
+    constructor(figuraStrategy) {
+        this.figura = figuraStrategy;
+    }
+
+    // Método para cambiar la estrategia
+    setStrategy(nuevaFigura) {
+        this.figura = nuevaFigura;
+    }
+
+    // Ejecuta el cálculo de Área (o Área Superficial)
+    ejecutarCalculoArea() {
+        console.log(`Calculando el área de: ${this.figura.nombre}`);
+        return this.figura.calcularArea();
+    }
+    
+    // Ejecuta el cálculo de Perímetro/Volumen (depende de la figura)
+    ejecutarCalculoSecundario() {
+        if (this.figura instanceof Cubo) {
+            console.log(`Calculando el volumen de: ${this.figura.nombre}`);
+            return this.figura.calcularVolumen();
+        } else if (this.figura instanceof PentagonoRegular) {
+            console.log(`Calculando el perímetro de: ${this.figura.nombre}`);
+            return this.figura.calcularPerimetro();
+        }
+        return null;
+    }
+}
+
+// Creamos las instancias de las figuras (estrategias)
+const miPentagono = new PentagonoRegular(10, 6.88);
+const miCubo = new Cubo(7);
+
+// 1. Inicializamos la calculadora con el Pentágono
+const calculadora = new CalculadoraFigura(miPentagono);
+
+let resultadoAreaP = calculadora.ejecutarCalculoArea();
+let resultadoPerimetro = calculadora.ejecutarCalculoSecundario();
+console.log(`Resultado Área: ${resultadoAreaP}`);
+console.log(`Resultado Perímetro: ${resultadoPerimetro}`);
+
+console.log('--- Cambiando la estrategia a Cubo ---');
+
+// 2. Cambiamos la estrategia al Cubo
+calculadora.setStrategy(miCubo);
+
+let resultadoAreaC = calculadora.ejecutarCalculoArea();
+let resultadoVolumen = calculadora.ejecutarCalculoSecundario();
+console.log(`Resultado Área Superficial: ${resultadoAreaC}`);
+console.log(`Resultado Volumen: ${resultadoVolumen}`);
     // Línea del medio (frente del cubo)
     drawing.push(corner + horizontal.repeat(size) + corner + space.repeat(size) + vertical);
 
