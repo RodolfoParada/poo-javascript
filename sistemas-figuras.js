@@ -241,6 +241,58 @@ class Cubo extends FiguraGeometrica {
   calcularSumaAristas() {
     return 12 * this.lado;
   }
+
+  // Nuevo método para dibujar el cubo en ASCII
+  dibujarASCII() {
+    const size = Math.floor(this.lado); // Usamos el lado como base para el tamaño del dibujo
+    if (size < 2) {
+      console.log("El lado debe ser al menos 2 para un dibujo ASCII visible.");
+      return;
+    }
+
+    // Caracteres para dibujar
+    const corner = '+';
+    const horizontal = '-';
+    const vertical = '|';
+    const diagonal = '/';
+    const space = ' ';
+
+    let drawing = [];
+
+    // Lado superior del cubo (cara superior)
+    // Primera línea: esquina + líneas horizontales + esquina
+    drawing.push(space.repeat(size) + corner + horizontal.repeat(size) + corner);
+
+    // Líneas intermedias de la cara superior y diagonales
+    for (let i = 0; i < size -1; i++) {
+        drawing.push(
+            space.repeat(size -1 - i) + diagonal +
+            space.repeat(size) + vertical +
+            space.repeat(i) + diagonal + corner
+        );
+    }
+
+
+    // Línea del medio (frente del cubo)
+    drawing.push(corner + horizontal.repeat(size) + corner + space.repeat(size) + vertical);
+
+    // Líneas inferiores del frente y diagonales
+    for (let i = 0; i < size-1; i++) {
+        drawing.push(
+            vertical + space.repeat(size) + vertical +
+            space.repeat(size-1-i) + diagonal +
+            space.repeat(i) + vertical
+        );
+    }
+    
+    // Última línea: esquina + líneas horizontales + esquina
+    drawing.push(corner + horizontal.repeat(size) + corner);
+
+    // Unir todas las líneas y mostrarlas
+    console.log(`\nDibujo ASCII de un ${this.nombre} (lado ${this.lado}):`);
+    console.log(drawing.join('\n'));
+    console.log(''); // Línea vacía para separación
+  }
 }
 
 // Demostración completa del sistema
