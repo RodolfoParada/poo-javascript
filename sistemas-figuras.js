@@ -216,6 +216,32 @@ class Hexagono extends FiguraGeometrica {
 }
 
 
+// Clase Cubo
+class Cubo extends FiguraGeometrica {
+  // Solo necesita la arista (lado)
+  constructor(lado) {
+    super('Cubo');
+    this.lado = lado;
+  }
+
+  // Ahora calcula el Área Superficial Total
+  calcularArea() {
+    // 6 * lado * lado
+    return 6 * this.lado * this.lado;
+  }
+
+  // Método específico para el volumen
+  calcularVolumen() {
+    // lado * lado * lado
+    return this.lado ** 3;
+  }
+
+  // El perímetro no aplica en 3D (se reemplaza por Área Superficial)
+  // Pero podrías calcular la suma de todas las aristas: 12 * lado
+  calcularSumaAristas() {
+    return 12 * this.lado;
+  }
+}
 
 // Demostración completa del sistema
 console.log('🚀 SISTEMA DE FIGURAS GEOMÉTRICAS CON POO\n');
